@@ -7,13 +7,25 @@ This is an update fork of [pry0cc](https://github.com/pry0cc)'s [axiom-local](ht
 clone this repository on a machine and distribute it to the fleet machines
 
 ```bash
-git clone #link
+git clone https://github.com/asempire/axiom-local.git
 ```
 ## Usage
 
 ```bash
 ./axiom-local-install.sh -u <user password> -r <root password>
 ```
+## Deployment
+the ```deploy.sh``` is an automated solution to deploy and install the tools on all available hosts simultaneously
+
+* first create a CSV of all hosts file in the following format:
+    ```Host,username,IP,user pass,root pass```
+* Second run:
+```./deploy.sh -f <csv file>```
+* Third wait for the installation to finish and keep ssh_config in the same directory untill it does
+* You can check when installation finishes by using progress.sh
+```./progress.sh -f <csv file>```
+
+
 ## Important notes
 
 * This is tested on 64-bit latest Ubuntu server/Desktop
@@ -26,7 +38,7 @@ git clone #link
 
 ## To do
 * add support for more distributions and architectures
-* make a deployment script that distributes and installs axiom-local on all fleet machines simultaneously 
+ 
 
 
 

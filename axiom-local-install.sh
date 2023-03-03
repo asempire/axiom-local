@@ -195,3 +195,5 @@ fi
 echo -e $pass | sudo -S usermod -aG users $user 
 echo -e $pass | sudo -S chgrp -R users $HOME 
 echo -e $pass | sudo -S chown -R $user $HOME
+
+touch $HOME/axiom-local/configs/complete_install
