@@ -68,7 +68,7 @@ then
         echo -e $pass | sudo  -S add-apt-repository -y ppa:longsleep/golang-backports
         echo -e $pass | sudo -S apt-get update -qq
 
-        echo -e $pass | sudo -S DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES  apt-get -y install tor apt-transport-https bundler ca-certificates debian-keyring p7zip zsh unzip zip curl figlet zlib1g-dev python2 python3 default-jdk python3-pip python3-venv libpcap-dev ruby ruby-dev nmap vim dirmngr gnupg-agent gnupg2 libpq-dev software-properties-common golang-go fonts-liberation libappindicator3-1 libcairo2 libgbm1 libgdk-pixbuf2.0-0 libgtk-3-0 libxss1 xdg-utils masscan zmap sqlmap dirb jq ufw neovim ranger bat grc mosh net-tools
+        echo -e $pass | sudo -S DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES  apt-get -y install tor apt-transport-https bundler tmux rsync ca-certificates debian-keyring p7zip zsh unzip zip curl figlet zlib1g-dev python2 python3 default-jdk python3-pip python3-venv libpcap-dev ruby ruby-dev nmap vim dirmngr gnupg-agent gnupg2 libpq-dev software-properties-common golang-go fonts-liberation libappindicator3-1 libcairo2 libgbm1 libgdk-pixbuf2.0-0 libgtk-3-0 libxss1 xdg-utils masscan zmap sqlmap dirb jq ufw neovim ranger bat grc mosh net-tools
     fi
     if [[ $OS == "Debian" ]];
     then
@@ -87,7 +87,7 @@ then
         echo $root_pass | /bin/su -l root -c "echo 'deb http://deb.debian.org/debian/ unstable main' > /etc/apt/sources.list.d/unstable.list"
         echo $root_pass | /bin/su -l root -c "echo 'deb-src http://deb.debian.org/debian/ unstable main' >> /etc/apt/sources.list.d/unstable.list"  
         echo -e $pass | sudo -S apt update
-        echo -e $pass | sudo -S DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES  apt-get -y install -t stable tor git apt-transport-https ca-certificates debian-keyring bundler p7zip zsh unzip zip curl figlet zlib1g-dev python2 python3 default-jdk python3-pip python3-venv libpcap-dev ruby ruby-dev nmap vim dirmngr gnupg-agent gnupg2 libpq-dev software-properties-common fonts-liberation libappindicator3-1 libcairo2 libgbm1 libgdk-pixbuf2.0-0 libgtk-3-0 libxss1 xdg-utils masscan zmap sqlmap dirb jq ufw neovim ranger grc mosh net-tools bat
+        echo -e $pass | sudo -S DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES  apt-get -y install -t stable tor tmux rsync git apt-transport-https ca-certificates debian-keyring bundler p7zip zsh unzip zip curl figlet zlib1g-dev python2 python3 default-jdk python3-pip python3-venv libpcap-dev ruby ruby-dev nmap vim dirmngr gnupg-agent gnupg2 libpq-dev software-properties-common fonts-liberation libappindicator3-1 libcairo2 libgbm1 libgdk-pixbuf2.0-0 libgtk-3-0 libxss1 xdg-utils masscan zmap sqlmap dirb jq ufw neovim ranger grc mosh net-tools bat
         echo -e $pass | sudo -S DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES  apt-get -y install -t unstable golang
     fi
 fi
