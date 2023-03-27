@@ -68,7 +68,7 @@ then
         echo -e $pass | sudo  -S add-apt-repository -y ppa:longsleep/golang-backports
         echo -e $pass | sudo -S apt-get update -qq
 
-        echo -e $pass | sudo -S DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES  apt-get -y install tor apt-transport-https bundler tmux rsync ca-certificates debian-keyring p7zip zsh unzip zip curl figlet zlib1g-dev python2 python3 default-jdk python3-pip python3-venv libpcap-dev ruby ruby-dev nmap vim dirmngr gnupg-agent gnupg2 libpq-dev software-properties-common golang-go fonts-liberation libappindicator3-1 libcairo2 libgbm1 libgdk-pixbuf2.0-0 libgtk-3-0 libxss1 xdg-utils masscan zmap sqlmap dirb jq ufw neovim ranger bat grc mosh net-tools
+        echo -e $pass | sudo -S DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES  apt-get -y install tor apt-transport-https bundler ca-certificates debian-keyring p7zip zsh unzip zip curl figlet zlib1g-dev python2 python3 default-jdk python3-pip python3-venv libpcap-dev ruby ruby-dev nmap vim dirmngr gnupg-agent gnupg2 libpq-dev software-properties-common golang-go fonts-liberation libappindicator3-1 libcairo2 libgbm1 libgdk-pixbuf2.0-0 libgtk-3-0 libxss1 xdg-utils masscan zmap sqlmap dirb jq ufw neovim ranger bat grc mosh net-tools
     fi
     if [[ $OS == "Debian" ]];
     then
@@ -77,7 +77,7 @@ then
             echo "$user is already a sudoer"
         else
             echo "configuring sudo for $user"
-            echo $root_pass | /bin/su -l root -c 'apt update && apt upgrade && apt-get install sudo'
+            echo $root_pass | /bin/su -l root -c 'DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES apt update && DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES apt upgrade -y && DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES apt-get -y install sudo'
             echo $root_pass | /bin/su -l root -c "/usr/sbin/usermod -aG sudo $user"
             echo $root_pass | /bin/su -l root -c "echo '$user   ALL=(ALL:ALL) ALL' | (EDITOR='tee -a' /usr/sbin/visudo)"
         fi
@@ -87,7 +87,7 @@ then
         echo $root_pass | /bin/su -l root -c "echo 'deb http://deb.debian.org/debian/ unstable main' > /etc/apt/sources.list.d/unstable.list"
         echo $root_pass | /bin/su -l root -c "echo 'deb-src http://deb.debian.org/debian/ unstable main' >> /etc/apt/sources.list.d/unstable.list"  
         echo -e $pass | sudo -S apt update
-        echo -e $pass | sudo -S DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES  apt-get -y install -t stable tor tmux rsync git apt-transport-https ca-certificates debian-keyring bundler p7zip zsh unzip zip curl figlet zlib1g-dev python2 python3 default-jdk python3-pip python3-venv libpcap-dev ruby ruby-dev nmap vim dirmngr gnupg-agent gnupg2 libpq-dev software-properties-common fonts-liberation libappindicator3-1 libcairo2 libgbm1 libgdk-pixbuf2.0-0 libgtk-3-0 libxss1 xdg-utils masscan zmap sqlmap dirb jq ufw neovim ranger grc mosh net-tools bat
+        echo -e $pass | sudo -S DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES  apt-get -y install -t stable tor tmux git apt-transport-https ca-certificates debian-keyring bundler p7zip zsh unzip zip curl figlet zlib1g-dev python2 python3 default-jdk python3-pip python3-venv libpcap-dev ruby ruby-dev nmap vim dirmngr gnupg-agent gnupg2 libpq-dev software-properties-common fonts-liberation libappindicator3-1 libcairo2 libgbm1 libgdk-pixbuf2.0-0 libgtk-3-0 libxss1 xdg-utils masscan zmap sqlmap dirb jq ufw neovim ranger grc mosh net-tools bat rsync
         echo -e $pass | sudo -S DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES  apt-get -y install -t unstable golang
     fi
 fi
@@ -176,7 +176,7 @@ do
     author="$(echo $line | cut -d "," -f 3 | tr -d '"')"
 
     echo "Instaling '$name' by '$author'..."
-    echo -e $pass | sudo -u $user -S go install $url@latest
+    echo -e $pass | sudo -u $user -S go install $url
 done
 
 
@@ -193,7 +193,11 @@ then
 fi
 
 echo -e $pass | sudo -S usermod -aG users $user 
-echo -e $pass | sudo -S chgrp -R users $HOME 
-echo -e $pass | sudo -S chown -R $user $HOME
-
+echo -e $pass | sudo -S chgrp -R users /home 
+echo -e $pass | sudo -S chown -R $user /home
+mkdir /home/op
+mv -f $HOME/recon /home/op
+mv -f $HOME/lists /home/op
+mv -f $HOME/go /home/op
+mv -f $HOME/hashes /home/op
 touch $HOME/axiom-local/configs/complete_install

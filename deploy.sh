@@ -71,7 +71,12 @@ do
     pass="$(echo $line | cut -d',' -f 4)"
     root_pass="$(echo $line | cut -d',' -f 5)"
     sshpass -p $pass ssh-copy-id -f -i ~/.ssh/id_rsa.pub -o StrictHostKeyChecking=no $user@$ip 
-    scp -r . $user@$ip:"~/axiom-local" 
-    ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$ip "cd ~/axiom-local && ./axiom-local-install.sh -u $pass -r $root_pass &> /dev/null" & 
+    if ssh $user@$ip '[ -d ~/axiom-local ]';
+    then
+        echo "config directory exists and won't be copied"
+    else 
+       scp -r . $user@$ip:"~/axiom-local"  
+    fi
+    ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$ip "cd ~/axiom-local && ./axiom-local-install.sh -u $pass -r $root_pass &> /dev/null" &
 done
 ############################################

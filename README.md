@@ -38,9 +38,12 @@ the ```deploy.sh``` is an automated solution to deploy and install the tools on 
 
 ## To do
 * add support for more distributions and architectures
- 
 
-
+## Latest Bug fixes
+* Moved all tools to a directory called `/home/op` to provide compatability with axiom interact scripts
+* fixed a bug where installing tools with apt on debian hung
+* improved the deployment script so that running it multiple times produce less errors
+* added rsync to debian installs
 
 ## License
 
