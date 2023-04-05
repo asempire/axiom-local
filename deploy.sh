@@ -31,31 +31,25 @@ fi
 
 #make ssh_config file from csv file
 ############################################
-if [[ -f ssh_config ]];
+if [[ -f ~/.axiom/ssh_config ]];
 then
     echo "ssh_config already exists and will be regenerated"
-    rm ssh_config
+    rm ~/.axiom/ssh_config
 fi
 
+if [[ -f ~/.axiom/selected.conf ]];
+then
+    echo "selected.conf already exists and will be regenerated"
+    rm ~/.axiom/selected.conf
+fi
 while IFS= read -r line
 do 
     host="$(echo $line | cut -d',' -f 1)"
     user="$(echo $line | cut -d',' -f 2)"
     ip="$(echo $line | cut -d',' -f 3)"
-    echo -e "Host $host\n\tHostname $ip\n\tUser $user"  >> ssh_config
+    echo -e "Host $host\n\tHostname $ip\n\tUser $user"  >> ~/.axiom/ssh_config
+    echo -e "$host" >> ~/.axiom/selected.conf
 done <<< $(cat $file)
-############################################
-
-
-
-#generate ssh keys
-############################################
-if [[  ! -f $HOME/.ssh/id_rsa ]];
-then
-    ssh-keygen -f ~/.ssh/id_rsa     
-else 
-    echo "file exists"
-fi
 ############################################
 
 
@@ -70,7 +64,7 @@ do
     ip="$(echo $line | cut -d',' -f 3)"
     pass="$(echo $line | cut -d',' -f 4)"
     root_pass="$(echo $line | cut -d',' -f 5)"
-    sshpass -p $pass ssh-copy-id -f -i ~/.ssh/id_rsa.pub -o StrictHostKeyChecking=no $user@$ip 
+    sshpass -p $pass ssh-copy-id -f -i ~/.ssh/axiom_rsa.pub -o StrictHostKeyChecking=no $user@$ip 
     if ssh $user@$ip '[ -d ~/axiom-local ]';
     then
         echo "config directory exists and won't be copied"
