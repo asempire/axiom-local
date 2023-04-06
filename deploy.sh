@@ -55,6 +55,16 @@ done <<< $(cat $file)
 
 
 
+echo -e -n "Would you like to deploy axiom tools to the machines now? (y/N): \n>"
+read choice
+
+if [[ $choice == "Y" || $choice == "y" ]];
+then
+    echo "The deployment process might be buggy so please be patient"
+else
+    echo "Deployment skipped, you can always run ~/.axiom/axiom-local/deploy.sh -f <csv file in ~/.axiom/axiom-local> to deploy tools to instances"
+    exit 0
+fi
 #push installation script to hosts
 ############################################
 for line in $(cat $file)
