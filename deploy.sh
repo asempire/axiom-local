@@ -47,7 +47,7 @@ do
     host="$(echo $line | cut -d',' -f 1)"
     user="$(echo $line | cut -d',' -f 2)"
     ip="$(echo $line | cut -d',' -f 3)"
-    echo -e "Host $host\n\tHostname $ip\n\tUser $user"  >> ~/.axiom/ssh_config
+    echo -e "Host $host\n\tHostname $ip\n\tUser $user"  >> ~/.axiom/.sshconfig
     echo -e "$host" >> ~/.axiom/selected.conf
 done <<< $(cat $file)
 ############################################
