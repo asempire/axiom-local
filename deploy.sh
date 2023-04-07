@@ -79,7 +79,7 @@ do
     then
         echo "config directory exists and won't be copied"
     else 
-       scp -r . $user@$ip:"~/axiom-local"  
+       scp -r $HOME/.axiom/axiom-local $user@$ip:"~/axiom-local"  
     fi
     ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$ip "cd ~/axiom-local && ./axiom-local-install.sh -u $pass -r $root_pass &> /dev/null" &
 done
