@@ -47,7 +47,7 @@ do
     host="$(echo $line | cut -d',' -f 1)"
     user="$(echo $line | cut -d',' -f 2)"
     ip="$(echo $line | cut -d',' -f 3)"
-    echo -e "Host $host\n\tHostname $ip\n\tUser $user"  >> ~/.axiom/.sshconfig
+    echo -e "Host $host\n\tHostname $ip\n\tUser $user\n\tIdentityFile ~/.ssh/axiom_rsa"  >> ~/.axiom/.sshconfig
     echo -e "$host" >> ~/.axiom/selected.conf
 done <<< $(cat $file)
 ############################################
@@ -75,12 +75,13 @@ do
     pass="$(echo $line | cut -d',' -f 4)"
     root_pass="$(echo $line | cut -d',' -f 5)"
     sshpass -p $pass ssh-copy-id -f -i ~/.ssh/axiom_rsa.pub -o StrictHostKeyChecking=no $user@$ip 
-    if ssh $user@$ip '[ -d ~/axiom-local ]';
+    if ssh -i ~/.ssh/axiom_rsa $user@$ip '[ -d ~/axiom-local ]';
     then
         echo "config directory exists and won't be copied"
     else 
-       scp -r $HOME/.axiom/axiom-local $user@$ip:"~/axiom-local"  
+       scp -i ~/.ssh/axiom_rsa -r $HOME/.axiom/axiom-local $user@$ip:"~/axiom-local"  
     fi
-    ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$ip "cd ~/axiom-local && ./axiom-local-install.sh -u $pass -r $root_pass &> /dev/null" &
+    ssh -i ~/.ssh/axiom_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $user@$ip "cd ~/axiom-local && ./axiom-local-install.sh -u $pass -r $root_pass &> /dev/null" &
 done
 ############################################
+# To later try: maybe append .sshconfig content to ~/.ssh/config 
