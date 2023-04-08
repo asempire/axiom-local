@@ -176,7 +176,7 @@ do
     author="$(echo $line | cut -d "," -f 3 | tr -d '"')"
 
     echo "Instaling '$name' by '$author'..."
-    echo -e $pass | sudo -u $user -S go install $url
+    echo -e $pass | sudo -u $user -S go install $url@latest
 done
 
 
