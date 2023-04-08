@@ -33,5 +33,5 @@ for line in $(cat $file)
 do
     host="$(echo $line | cut -d',' -f 1)"
     user="$(echo $line | cut -d',' -f 2)"
-    ssh -F ssh_config -q $user@$host [[ -f "~/axiom-local/configs/complete_install" ]] && echo "installation for $host finished" || echo "installation for $host not finished yet";
+    ssh -F ~/.axiom/.sshconfig -i ~/.ssh/axiom_rsa -q $user@$host [[ -f "~/axiom-local/configs/complete_install" ]] && echo "installation for $host finished" || echo "installation for $host not finished yet";
 done
